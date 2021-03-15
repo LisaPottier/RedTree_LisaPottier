@@ -7,11 +7,13 @@ const params = {
     taille: 10,
     Random_Seed: 0,
     deformation:4,
+    number:100,
     Download_Image: () => save(),
 }
 gui.add(params, "taille", 0, 40, 1)
 gui.add(params, "Random_Seed", 0, 100, 1)
 gui.add(params, "Download_Image")
+gui.add(params,'number', 50,500,1)
 gui.add(params,'deformation', 1,10,1)
 
 
@@ -30,7 +32,21 @@ function draw()
     let hauteur=height;
     let colorArray =['black','#3459ba'/*blue*/,'#db3425'/*red*/,'#ffdd47'/*yellow*/];
 
-    for(let i=0;i<largeur/params.taille; i++)
+    for(let i=0; i<params.number; i++)
+    {
+        let colour=random(colorArray);
+        fill(color(colour));    
+        let h = params.taille*random(1,params.deformation);
+        let l=params.taille*random(1,params.deformation);   
+        push()
+            translate(random(largeur),random(hauteur))
+            rect(0,0,l,h)
+        pop()
+    }    
+}
+
+//first try with drawing a square a each pixel
+    /*for(let i=0;i<largeur/params.taille; i++)
     {
         for(let j=0; j<hauteur/params.taille;j++)
         {
@@ -43,7 +59,7 @@ function draw()
                 rect(0,0,l,h)
             pop()
         }
-    }
+    }*/
 }
     
 
