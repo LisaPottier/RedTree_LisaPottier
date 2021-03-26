@@ -1,33 +1,39 @@
 var gui = new dat.GUI();
 var params = {
     taille: 10,
-    Random_Seed: 0,
-    deformation: 4,
+    noise_Seed: 0,
+    random_Seed: 0,
+    deformation: 8,
+    number: 175,
     Download_Image: function () { return save(); },
 };
 gui.add(params, "taille", 0, 40, 1);
-gui.add(params, "Random_Seed", 0, 100, 1);
+gui.add(params, "noise_Seed", 0, 100, 1);
+gui.add(params, "random_Seed", 0, 100, 1);
 gui.add(params, "Download_Image");
+gui.add(params, 'number', 50, 500, 1);
 gui.add(params, 'deformation', 1, 10, 1);
 function draw() {
-    randomSeed(params.Random_Seed);
+    noiseSeed(params.noise_Seed);
+    randomSeed(params.random_Seed);
     rectMode(CORNER);
+    ellipseMode(CENTER);
     noStroke();
     background(215, 210, 210);
-    var largeur = width;
-    var hauteur = height;
-    var colorArray = ['black', '#3459ba', '#db3425', '#ffdd47'];
-    for (var i = 0; i < largeur / params.taille; i++) {
-        for (var j = 0; j < hauteur / params.taille; j++) {
-            var colour = random(colorArray);
-            fill(color(colour));
-            var h = params.taille * random(1, params.deformation);
-            var l = params.taille * random(1, params.deformation);
-            push();
-            translate(i * l, j * h);
-            rect(0, 0, l, h);
-            pop();
-        }
+    var colorArray = ['#eeeee4',
+        'black',
+        '#3459ba',
+        '#db3425',
+        '#ffdd47'];
+    for (var i = 0; i < params.number; i++) {
+        var colour = random(colorArray);
+        fill(color(colour));
+        var h = params.taille * random(1, params.deformation);
+        var l = params.taille * random(1, params.deformation);
+        push();
+        translate(random(width), random(height));
+        ellipse(0, 0, l, h);
+        pop();
     }
 }
 function setup() {
